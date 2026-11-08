@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Automatic dependency update proposals (LUD-PLN-004, section 8). Every update is a
+# reviewed "build" or "ci" change; tool upgrades repeat the checks of LUD-PRC-002.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+      include: scope
+    open-pull-requests-limit: 5
