@@ -1,0 +1,9 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Rejects commit messages that violate LUD-PLN-004 section 6 before the commit
+# is created. Enable with: make hooks   (sets core.hooksPath to .githooks)
+set -eu
+top="$(git rev-parse --show-toplevel)"
+PYTHONPATH="$top/tools" exec python3 -m ludus_tools.commitcheck --message-file "$1"
