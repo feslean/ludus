@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+
+[project]
+name = "ludus-tools"
+version = "0.1.0"
+description = "Process tooling (traceability, document control, commit checks) for the Ludus project"
+license = "MIT"
+requires-python = ">=3.13"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["tools"]
+addopts = ["--strict-markers", "--strict-config", "-ra"]
+
+[tool.coverage.run]
+branch = true
+source = ["tools/ludus_tools"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["tools", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "N", "SIM", "RUF", "S", "PTH", "PL"]
+ignore = [
+    "PLR0912", # branch count: checker functions enumerate rules deliberately
+    "PLR0915", # statement count: same reason
+    "PLR2004", # magic values in tests and in rule tables are intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S603", "S607", "PLR0913"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+mypy_path = "tools"
+files = ["tools", "tests"]

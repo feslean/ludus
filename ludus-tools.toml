@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Configuration of the Ludus process tools (tools/ludus_tools).
+# Changes to this file are configuration changes under LUD-PLN-004.
+
+[trace]
+requirements_dirs = ["requirements"]
+tag_dirs = ["tools", "tests"]
+tag_suffixes = [".py", ".c", ".h", ".rs", ".sh"]
+matrix = "docs/verification/traceability-matrix.md"
+version_file = "VERSION"
+
+[doccheck]
+controlled_dirs = ["docs"]
+register = "docs/README.md"
+exclude_dirs = [".git", ".venv", "node_modules", ".pytest_cache", ".mypy_cache", ".ruff_cache", "build", "dist"]
+
+[release]
+version_file = "VERSION"
+pyproject = "pyproject.toml"
+package_init = "tools/ludus_tools/__init__.py"
+changelog = "CHANGELOG.md"
