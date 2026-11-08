@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Code owners must approve changes to the paths below (LUD-PLN-004, section 4.2).
+#
+# Open item OI-002: replace <maintainer> with the GitHub user name of each maintainer
+# (written with a leading at sign), remove the comment markers from the rules, and enable
+# "Require review from Code Owners" in the branch protection of main. The rules are
+# commented out until then because GitHub rejects unknown owners.
+#
+# *                          <maintainer>
+# /docs/plans/               <maintainer>
+# /docs/standards/           <maintainer>
+# /docs/security/            <maintainer>
+# /requirements/             <maintainer>
+# /tools/                    <maintainer>
+# /.github/                  <maintainer>
+# /ludus-tools.toml          <maintainer>
+# /requirements-dev.txt      <maintainer>

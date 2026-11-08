@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Change request form (LUD-PLN-004, section 4.1).
+name: Change request
+description: Propose new or changed behavior, or a change to a controlled document.
+title: "[CR] "
+labels: ["change-request"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem does the change solve, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: The change, including proposed requirement statements where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Affected requirements, components, assurance levels, documents and users.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Every issue is a problem report or a change request (LUD-PLN-004, section 4.1).
+# Security vulnerabilities are reported privately (SECURITY.md).
+blank_issues_enabled: false

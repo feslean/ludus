@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# Problem report form (LUD-PRC-001, section 3).
+name: Problem report
+description: Report software that does not meet a requirement, or a defect in a document or process.
+title: "[PR] "
+labels: ["problem-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not use this form for security vulnerabilities.** Report them privately as
+        described in SECURITY.md.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One sentence describing the problem.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Affected version or commit
+      placeholder: "0.1.0 or a commit hash"
+    validations:
+      required: true
+  - type: textarea
+    id: items
+    attributes:
+      label: Affected items
+      description: Requirements, code, documents or tests, if known.
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What happened. Include logs and steps to reproduce.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should have happened, with the requirement or rule if known.
+    validations:
+      required: true
+  - type: dropdown
+    id: suggested-class
+    attributes:
+      label: Suggested class
+      description: Maintainers confirm the class during triage (LUD-PRC-001, section 4).
+      options:
+        - "PR-1 Safety"
+        - "PR-2 Functional"
+        - "PR-3 Process"
+        - "PR-4 Editorial"
+        - "Not sure"
+    validations:
+      required: true
