@@ -1,0 +1,96 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# System requirements (SYS). Format and rules: LUD-STD-001 (docs/standards/requirements-standard.md).
+# Process requirements (area PRC) apply to how Ludus is built; product requirements
+# (areas FRC, SAF, SEC) apply to what Ludus does.
+
+[[requirement]]
+id = "SYS-PRC-001"
+title = "Bidirectional traceability"
+statement = "The project shall maintain bidirectional traceability between system requirements, software requirements, source code and verification cases."
+rationale = "Traceability is the basis for showing that every requirement is implemented and verified and that no code exists without a requirement (DO-178C process model, see LUD-PLN-001)."
+verification = ["inspection"]
+assurance = "LAL-2"
+status = "approved"
+
+[[requirement]]
+id = "SYS-PRC-002"
+title = "Controlled document conformance"
+statement = "The project shall verify on every proposed change that all controlled documents conform to the Documentation Standard (LUD-STD-004)."
+rationale = "Document control (identifiers, revisions, register, working links) must not depend on manual discipline alone."
+verification = ["inspection"]
+assurance = "LAL-2"
+status = "approved"
+
+[[requirement]]
+id = "SYS-PRC-003"
+title = "Commit message conformance"
+statement = "The project shall verify that every commit proposed for the main branch conforms to the commit message rules of the Software Configuration Management Plan (LUD-PLN-004)."
+rationale = "Commit messages are part of the modification history and carry the trace references required by the SCMP."
+verification = ["inspection"]
+assurance = "LAL-2"
+status = "approved"
+
+[[requirement]]
+id = "SYS-PRC-004"
+title = "Release version consistency"
+statement = "The project shall verify on every proposed change that the release version identifier is consistent across all files that declare it and is recorded in the changelog."
+rationale = "A release whose version files disagree cannot be identified unambiguously in the Software Configuration Index."
+verification = ["inspection"]
+assurance = "LAL-2"
+status = "approved"
+
+[[requirement]]
+id = "SYS-FRC-001"
+title = "Session telemetry recording"
+statement = "Ludus shall record per-session performance telemetry of each monitored game, covering frame timing, thread scheduling, GPU pass timing and file access, on the local machine."
+rationale = "Every learning layer of Ludus depends on measured data from real sessions; this is the first milestone of the roadmap (LUD-PRJ-001)."
+verification = ["test"]
+assurance = "LAL-1"
+status = "approved"
+
+[[requirement]]
+id = "SYS-FRC-002"
+title = "Telemetry overhead budget"
+statement = "Telemetry collection performed by Ludus shall not increase the mean frame time of a game session by more than 1.0 percent relative to the same session without collection."
+rationale = "A recorder that changes the behavior it measures invalidates the measurements and costs the player performance."
+verification = ["test", "analysis"]
+assurance = "LAL-1"
+status = "approved"
+
+[[requirement]]
+id = "SYS-FRC-003"
+title = "Local-only telemetry by default"
+statement = "Ludus shall keep all recorded telemetry on the local machine unless the user has explicitly enabled sharing."
+rationale = "Telemetry contains information about the user's software and habits; sharing must be an informed, opt-in decision."
+verification = ["test", "review"]
+assurance = "LAL-2"
+status = "approved"
+
+[[requirement]]
+id = "SYS-SAF-001"
+title = "Single-action rollback"
+statement = "Ludus shall allow every optimization it has applied to a game to be reverted to the unmodified configuration by a single user action."
+rationale = "A self-modifying system must always offer a known-good way back."
+verification = ["test"]
+assurance = "LAL-1"
+status = "draft"
+
+[[requirement]]
+id = "SYS-SAF-002"
+title = "Only verified optimizations are applied"
+statement = "Ludus shall not apply an optimization to a game unless the optimization has passed the verification criteria defined for its optimization tier."
+rationale = "Unverified changes can corrupt rendering, crash games or degrade performance."
+verification = ["test", "analysis"]
+assurance = "LAL-1"
+status = "draft"
+
+[[requirement]]
+id = "SYS-SEC-001"
+title = "Privileged components at LAL-1"
+statement = "Every Ludus component that executes with elevated privileges shall be developed at assurance level LAL-1."
+rationale = "Privileged code can compromise the whole machine; it receives the highest rigor (LUD-PLN-001, section 4)."
+verification = ["review"]
+assurance = "LAL-1"
+status = "draft"

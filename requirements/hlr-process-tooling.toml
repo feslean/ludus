@@ -1,0 +1,365 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# High-level requirements for the process tools in tools/ludus_tools.
+# TRC = traceability checker (T-001), DOC = document checker (T-002),
+# CMT = commit message checker (T-003), REL = release checker (T-004).
+# Tool qualification: LUD-PRC-002.
+
+# ---------------------------------------------------------------- T-001 trace
+
+[[requirement]]
+id = "HLR-TRC-001"
+title = "Unreadable requirements files"
+statement = "The traceability checker shall report an error for each requirements file that is not valid UTF-8, is not valid TOML or contains no requirement tables."
+rationale = "A requirements file that is silently skipped would hide requirements from every other check."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-002"
+title = "Mandatory attributes"
+statement = "The traceability checker shall report an error for each requirement that lacks a mandatory attribute or has an attribute of the wrong type."
+rationale = "Every requirement needs an identifier, title, statement, rationale, verification method, assurance level and status (LUD-STD-001, section 4)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-003"
+title = "Identifier format"
+statement = "The traceability checker shall report an error for each requirement identifier that does not match the pattern LEVEL-AREA-NNN defined in the Requirements Standard."
+rationale = "Uniform identifiers make references machine-checkable."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-004"
+title = "Unique identifiers"
+statement = "The traceability checker shall report an error when two or more requirements share the same identifier."
+rationale = "Duplicate identifiers make trace references ambiguous."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-005"
+title = "Atomic statements"
+statement = "The traceability checker shall report an error for each requirement statement in which the obligation keyword defined in the Requirements Standard does not occur exactly once."
+rationale = "One obligation per requirement keeps requirements atomic and individually verifiable (LUD-STD-001, section 5)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-006"
+title = "Enumerated attribute values"
+statement = "The traceability checker shall report an error for each verification method, assurance level or status value that is not defined in the Requirements Standard."
+rationale = "Free-text values defeat filtering and coverage rules."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-007"
+title = "Level hierarchy"
+statement = "The traceability checker shall report an error for each requirement whose parent relationships violate the level hierarchy defined in the Requirements Standard."
+rationale = "System requirements have no parents, HLRs trace to system requirements, LLRs trace to HLRs, and parentless software requirements must be declared derived with a rationale."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-008"
+title = "Dangling parent references"
+statement = "The traceability checker shall report an error for each parent reference that names a missing or deleted requirement."
+rationale = "Upward traceability is only meaningful if every parent exists."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-009"
+title = "Tag validity"
+statement = "The traceability checker shall report an error for each Verifies or Implements tag that is malformed or references a missing or deleted requirement."
+rationale = "Tags pointing to nothing produce false confidence in coverage."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-010"
+title = "Requirements-based test coverage"
+statement = "The traceability checker shall report an error for each requirement in status implemented or verified with test among its verification methods that no Verifies tag references."
+rationale = "Every implemented requirement verified by test must have at least one test case (requirements-based coverage, LUD-PLN-003)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-011"
+title = "Implementation coverage"
+statement = "The traceability checker shall report an error for each HLR or LLR in status implemented or verified that no Implements tag references."
+rationale = "Downward traceability from software requirements to code."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-012"
+title = "System requirement allocation"
+statement = "The traceability checker shall report an error for each system requirement in status approved, implemented or verified that has no child requirement."
+rationale = "An approved system requirement without software requirements is not being worked on."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-013"
+title = "Traceability matrix generation"
+statement = "The traceability checker shall generate a traceability matrix that lists the parents, children, implementing locations and verifying locations of every requirement in a deterministic order."
+rationale = "A reproducible matrix can be reviewed and compared between baselines."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-014"
+title = "Matrix currency check"
+statement = "The traceability checker shall report an error when the committed traceability matrix is missing or differs from the matrix generated from the current repository content."
+rationale = "CI must reject changes that leave the published matrix out of date."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-015"
+title = "Trace exit status"
+statement = "The traceability checker shall exit with status 0 when it finds no errors and with status 1 when it finds one or more errors."
+rationale = "CI gates rely on the exit status."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+[[requirement]]
+id = "HLR-TRC-016"
+title = "Trace configuration errors"
+statement = "The traceability checker shall exit with status 1 and an error message when its configuration file is missing, unreadable, not valid TOML, lacks a mandatory setting or names a missing or empty version file."
+rationale = "A misconfigured checker must fail closed instead of checking nothing."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-001"]
+
+# ------------------------------------------------------------- T-002 doccheck
+
+[[requirement]]
+id = "HLR-DOC-001"
+title = "Front matter"
+statement = "The document checker shall report an error for each controlled document that does not start with a terminated front matter block containing doc_id, title, revision, status and owner."
+rationale = "Front matter is the machine-readable identity of a controlled document (LUD-STD-004, section 4)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-002"
+title = "Document identifiers"
+statement = "The document checker shall report an error for each document identifier that does not match the pattern defined in the Documentation Standard or that is already used by another document."
+rationale = "Identifiers must be well-formed and unique to be referenced reliably."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-003"
+title = "Document status values"
+statement = "The document checker shall report an error for each document status that is not defined in the Documentation Standard."
+rationale = "Status drives which documents may be cited by a baseline."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-004"
+title = "Revision history consistency"
+statement = "The document checker shall report an error for each controlled document whose revision history section is missing, empty or ends with a revision different from the front matter revision."
+rationale = "The modification history of each document must agree with its declared revision."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-005"
+title = "Document register completeness"
+statement = "The document checker shall report an error for each controlled document identifier that the document register does not list, or once when the register itself is missing or unreadable."
+rationale = "The register is the index of the configuration; a document absent from it is uncontrolled."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-006"
+title = "Relative link integrity"
+statement = "The document checker shall report an error for each relative Markdown link outside code blocks and code spans that is absolute or does not resolve to an existing file or directory."
+rationale = "Broken cross-references make documentation unverifiable."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+[[requirement]]
+id = "HLR-DOC-007"
+title = "Doccheck exit status and configuration"
+statement = "The document checker shall exit with status 0 when it finds no errors and with status 1 when it finds an error or cannot use its configuration file."
+rationale = "CI gates rely on the exit status and the checker must fail closed."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-002"]
+
+# ---------------------------------------------------------- T-003 commitcheck
+
+[[requirement]]
+id = "HLR-CMT-001"
+title = "Header form"
+statement = "The commit message checker shall report an error for each commit header that does not have the form type, optional scope, optional breaking marker, colon and subject with a type listed in the SCMP."
+rationale = "Conventional headers make the history searchable and the changelog derivable (LUD-PLN-004, section 6)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-002"
+title = "Header length and punctuation"
+statement = "The commit message checker shall report an error for each commit header longer than 72 characters or ending with a period."
+rationale = "Short headers stay readable in one-line log views."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-003"
+title = "Body layout"
+statement = "The commit message checker shall report an error when the line after the header is not blank or a body line without a URL is longer than 100 characters."
+rationale = "Consistent layout keeps trailers parseable and history readable."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-004"
+title = "Trace references"
+statement = "The commit message checker shall report an error for each feat, fix or perf commit without a Refs trailer and for each Refs trailer that is empty or names something other than a requirement identifier or an issue number."
+rationale = "Functional changes must trace to a requirement or a problem report (LUD-PRC-001)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-005"
+title = "Breaking change explanation"
+statement = "The commit message checker shall report an error for each commit marked as breaking that has no BREAKING CHANGE footer."
+rationale = "Breaking changes drive the major version number and need an explanation."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-006"
+title = "No merge commits and no empty messages"
+statement = "The commit message checker shall report an error for each commit message that is empty or is a merge commit message."
+rationale = "The SCMP requires a linear history on the main branch."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-007"
+title = "Input modes"
+statement = "The commit message checker shall check either every commit of a git revision range or a single message file from which git comment lines have been removed."
+rationale = "CI checks pull request ranges; the commit-msg hook checks one message before the commit is created."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+[[requirement]]
+id = "HLR-CMT-008"
+title = "Commitcheck exit status"
+statement = "The commit message checker shall exit with status 0 when it finds no errors and with status 1 when it finds an error or cannot run git or read the message file."
+rationale = "CI gates and the commit-msg hook rely on the exit status, and the checker must fail closed."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-003"]
+
+# -------------------------------------------------------------- T-004 release
+
+[[requirement]]
+id = "HLR-REL-001"
+title = "Version identifier consistency"
+statement = "The release checker shall report an error when the version in the VERSION file differs from the project version in pyproject.toml or from the version declared in the tools package."
+rationale = "Every file that declares the version must agree so that a release is identified unambiguously (LUD-PLN-004, section 7)."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-004"]
+
+[[requirement]]
+id = "HLR-REL-002"
+title = "Changelog sections"
+statement = "The release checker shall report an error when the changelog has no Unreleased section or no dated section for the version in the VERSION file."
+rationale = "The changelog is the user-facing modification history and must cover the current version."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-004"]
+
+[[requirement]]
+id = "HLR-REL-003"
+title = "Semantic Versioning"
+statement = "The release checker shall report an error when the version in the VERSION file is not a valid Semantic Versioning 2.0.0 version."
+rationale = "The SCMP adopts Semantic Versioning 2.0.0 for releases."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-004"]
+
+[[requirement]]
+id = "HLR-REL-004"
+title = "Release checker exit status and configuration"
+statement = "The release checker shall exit with status 0 when it finds no errors and with status 1 when it finds an error, a missing or unreadable file, or an unusable configuration file."
+rationale = "CI gates rely on the exit status and the checker must fail closed."
+verification = ["test"]
+assurance = "LAL-2"
+status = "implemented"
+parents = ["SYS-PRC-004"]

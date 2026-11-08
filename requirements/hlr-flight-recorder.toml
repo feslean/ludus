@@ -1,0 +1,127 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+#
+# High-level requirements for the flight recorder (component FRC, roadmap phase 1).
+# Status: draft. These requirements are part of the planning baseline and are
+# reviewed at gate G1 (LUD-PRJ-001) before implementation starts. Requirements in
+# status draft are exempt from implementation and test coverage checks (LUD-STD-001).
+
+[[requirement]]
+id = "HLR-FRC-001"
+title = "Frame presentation timestamps"
+statement = "The flight recorder shall record the presentation time of every frame of a monitored game process from a monotonic clock with a resolution of 1 microsecond or better."
+rationale = "Frame times and 1% lows are the primary outcome measures of every optimization."
+verification = ["test"]
+assurance = "LAL-1"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-002"
+title = "Thread scheduling intervals"
+statement = "The flight recorder shall record, for each thread of a monitored game process, the CPU and the start and end time of every interval during which the thread was running."
+rationale = "The scheduler and core-isolation layers learn thread roles from this data."
+verification = ["test"]
+assurance = "LAL-1"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-003"
+title = "GPU pass timing"
+statement = "The flight recorder shall record the GPU execution time of each render pass submitted by a monitored game through the translation layer."
+rationale = "GPU-side optimizations are ranked by measured GPU time per pass."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-004"
+title = "File access records"
+statement = "The flight recorder shall record the path, offset, size and time of each file read issued by a monitored game process."
+rationale = "The storage layer learns per-level loading order from this data."
+verification = ["test"]
+assurance = "LAL-1"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-005"
+title = "Recording overhead"
+statement = "The flight recorder shall not increase the mean frame time of any reference benchmark session defined in the Software Verification Plan by more than 1.0 percent."
+rationale = "Allocates the system overhead budget of SYS-FRC-002 entirely to the recorder until other always-on components exist."
+verification = ["test", "analysis"]
+assurance = "LAL-1"
+status = "draft"
+parents = ["SYS-FRC-002"]
+
+[[requirement]]
+id = "HLR-FRC-006"
+title = "Bounded memory"
+statement = "The flight recorder shall limit its resident memory to a configurable maximum with a default of 64 MiB."
+rationale = "Unbounded buffering would compete with the game for memory, which matters most on shared-memory devices."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-002"]
+
+[[requirement]]
+id = "HLR-FRC-007"
+title = "Overflow policy"
+statement = "When its memory limit is reached, the flight recorder shall discard the oldest records not yet written to storage and count the discarded records in the session file."
+rationale = "Data loss must be bounded, predictable and visible to analysis."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-008"
+title = "Versioned session format"
+statement = "The flight recorder shall write each session to a file whose header contains a format version number."
+rationale = "Analysis tools must reject or migrate files written by other format versions."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-009"
+title = "Block integrity"
+statement = "The flight recorder shall protect each written data block with a CRC-32C checksum."
+rationale = "Corrupted telemetry must be detected rather than learned from."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-001"]
+
+[[requirement]]
+id = "HLR-FRC-010"
+title = "Local storage location"
+statement = "The flight recorder shall store session files only under the user's local data directory unless the user has enabled sharing."
+rationale = "Implements the local-only default of SYS-FRC-003."
+verification = ["test", "review"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-003"]
+
+[[requirement]]
+id = "HLR-FRC-011"
+title = "Home directory redaction"
+statement = "The flight recorder shall replace the user's home directory prefix in every recorded file path with a fixed placeholder."
+rationale = "File paths can contain the user name; redaction limits personal data even in local files that may later be shared."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-003"]
+
+[[requirement]]
+id = "HLR-FRC-012"
+title = "Finalization after abnormal termination"
+statement = "If the monitored game process terminates abnormally, the flight recorder shall finalize the session file so that all records received before termination remain readable."
+rationale = "Crashes are among the most valuable sessions to analyze."
+verification = ["test"]
+assurance = "LAL-2"
+status = "draft"
+parents = ["SYS-FRC-001"]
