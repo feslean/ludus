@@ -1,0 +1,12 @@
+version = 1
+SPDX-PackageName = "Ludus"
+SPDX-PackageDownloadLocation = "NOASSERTION"
+
+# Markdown files cannot carry an SPDX comment header: controlled documents must start
+# with front matter (LUD-STD-004, section 4), and GitHub templates must start with their
+# own content. The version file must contain only the version (LUD-PLN-004, section 7).
+[[annotations]]
+path = ["**.md", "VERSION"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Leandro Ferreira and Ludus contributors"
+SPDX-License-Identifier = "MIT"

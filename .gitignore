@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Verification output (results are summarized in the SAS, not committed)
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build output
+build/
+dist/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+.DS_Store

@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2026 Leandro Ferreira and Ludus contributors
+# SPDX-License-Identifier: MIT
+
+# Normalize line endings so that checksums, diffs and tool results are identical on
+# every platform.
+* text=auto eol=lf
+
+# Hooks must keep LF endings to run on POSIX shells.
+.githooks/* text eol=lf
+
+# The generated matrix is reviewed as a diff but never merged by hand.
+docs/verification/traceability-matrix.md linguist-generated=true
