@@ -25,7 +25,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out the change
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -56,7 +56,7 @@ jobs:
       # For pull requests, check out the head commit rather than the synthetic merge
       # commit, so that only the contributor's commits are checked.
       - name: Check out the commits
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
